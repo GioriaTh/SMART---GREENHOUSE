@@ -1,9 +1,14 @@
-CREATE DATABASE sensor_readings;
+-- Schema for the Smart Greenhouse sensor data.
+-- The table name must match the INSERT in db_sensor_data.php.
 
+CREATE DATABASE IF NOT EXISTS sensor_readings;
+USE sensor_readings;
 
-CREATE TABLE sensor_readings (
+DROP TABLE IF EXISTS sens_readings;
+
+CREATE TABLE sens_readings (
   id INT NOT NULL AUTO_INCREMENT,
-  TIMESTAMP datetime,
+  timestamp DATETIME,
   temp1 FLOAT,
   temp2 FLOAT,
   temp3 FLOAT,
@@ -20,10 +25,9 @@ CREATE TABLE sensor_readings (
   chtIn_temp FLOAT,
   chtOut_humidity FLOAT,
   chtOut_temp FLOAT,
-  ir_in SMALLINT(5) UNSIGNED,
-  ir_out SMALLINT(5) UNSIGNED,
-  door INT(11),
+  ir_in SMALLINT UNSIGNED,
+  ir_out SMALLINT UNSIGNED,
+  door INT,
   wind FLOAT,
   PRIMARY KEY (id)
-);DROP TABLE sensor_readings if EXISTS;
-
+);

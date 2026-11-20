@@ -49,8 +49,9 @@ SMART---GREENHOUSE/
 ### 1. Database and server
 
 1. Install a web server with PHP and MySQL (e.g. XAMPP / LAMP).
-2. Create the database and table with the SQL file.
-3. Copy `db_sensor_data.php` into the web root and fill in `$servername`, `$username`, `$password`.
+2. Make sure MySQL is running.
+3. Run the SQL file, e.g. `mysql -u root -p < "greenhouse Database/CREATE DATABASE sensor_readings;.sql"`.
+4. Copy `db_sensor_data.php` into the web root and fill in `$servername`, `$username`, `$password`.
 
 ### 2. Firmware
 
@@ -68,12 +69,10 @@ SMART---GREENHOUSE/
    "ir_in": 6183, "ir_out": 6183, "door": 1, "wind": 0.5 }]
 ```
 
-## Known issues
+## Notes
 
-- The SQL file creates table `sensor_readings`, but the PHP script inserts into `sens_readings` — use one name.
-- The SQL file ends with an invalid `DROP TABLE ... if EXISTS;` line and has no `USE sensor_readings;`.
-- The firmware stores the door state as `jsonDoc["Door"]` but reads `jsonDoc["door"]` when uploading, so the uploaded value can be wrong — use the same key.
-- The comments on `SAVE_INTERVAL` / `UPLOAD_INTERVAL` don't match their values (3 s / 1 min).
+- Default timing: one reading every 3 s (`SAVE_INTERVAL`), upload every 1 min (`UPLOAD_INTERVAL`).
+- The SQL file drops and recreates the `sens_readings` table — don't run it on a database with data you want to keep.
 
 ## Related projects
 

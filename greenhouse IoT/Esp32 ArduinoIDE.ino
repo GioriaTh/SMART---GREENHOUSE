@@ -76,8 +76,8 @@ unsigned long lastMillis = 0;
 unsigned long lastNTPUpdate = 0;
 unsigned long lastSaveTime = 0;
 unsigned long lastUploadTime = 0;
-const unsigned long SAVE_INTERVAL = 3* 1000;         // Save every 1 min
-const unsigned long UPLOAD_INTERVAL = 1* 60 * 1000;  // Upload every 5 minutes
+const unsigned long SAVE_INTERVAL = 3 * 1000;        // Save a reading every 3 seconds
+const unsigned long UPLOAD_INTERVAL = 1 * 60 * 1000; // Upload every 1 minute
 
 void setup() {
   Serial.begin(115200);
@@ -215,13 +215,13 @@ void loop() {
         Serial.println(getFormattedTime());  // Show updated time
     }
 
-  //  Collect and save sensor data every second
+  //  Collect and save sensor data every SAVE_INTERVAL
   if (currentMillis - lastSaveTime >= SAVE_INTERVAL) {
     lastSaveTime = currentMillis;
     saveSensorData();
   }
 
-  //  Every 5 minutes, connect to WiFi, upload, and disconnect
+  //  Every UPLOAD_INTERVAL, connect to WiFi, upload, and disconnect
   if (currentMillis - lastUploadTime >= UPLOAD_INTERVAL) {
     lastUploadTime = currentMillis;
     uploadDataFromSPIFFS();
@@ -257,7 +257,7 @@ void saveSensorData() {
 
   //Read doosr State
   int doorState = digitalRead(DOOR_SENSOR_PIN);
-  jsonDoc["Door"] = doorState;
+  jsonDoc["door"] = doorState;
 
   // Read TSL2591 sensors
   uint16_t ir_in, full1, ir_out, full2;

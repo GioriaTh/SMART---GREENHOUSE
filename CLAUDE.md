@@ -2,7 +2,7 @@
 
 ## Purpose
 
-ESP32 firmware + PHP/MySQL backend that collect greenhouse microclimate data. The data feeds the
+ESP32 firmware + PHP/MySQL backend (table `sens_readings` in database `sensor_readings`) that collect greenhouse microclimate data. The data feeds the
 ML work in the sibling repo `Greenhouse-AI`.
 
 ## Structure
@@ -25,14 +25,11 @@ When you change one of the three, update the other two and the README payload ex
 - Keep the low-power design: buffer to SPIFFS, Wi-Fi on only during upload.
 - Use prepared statements in PHP for any new queries.
 
-## Known issues to fix
+## Possible improvements
 
-- Table name mismatch: SQL creates `sensor_readings`, PHP inserts into `sens_readings`.
-- Invalid trailing `DROP TABLE ... if EXISTS;` in the SQL file; missing `USE sensor_readings;`.
-- Firmware writes `jsonDoc["Door"]` but reads `jsonDoc["door"]`.
-- Interval comments don't match values (`SAVE_INTERVAL`, `UPLOAD_INTERVAL`).
 - File names contain spaces and a `;` — consider `firmware/greenhouse.ino`, `database/schema.sql`,
   `database/db_sensor_data.php` (ask the owner before renaming).
+- Move Wi-Fi credentials and the server URL into a git-ignored `secrets.h`.
 
 ## Do not
 
